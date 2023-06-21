@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Group Chat</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f2f2f2;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+
+      .container {
+        max-width: 500px;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 20px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .input-group {
+        display: flex;
+        margin-bottom: 10px;
+      }
+
+      .input-group input[type="text"] {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 3px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .input-group button {
+        padding: 10px 20px;
+        margin-left: 10px;
+        border: none;
+        border-radius: 3px;
+        background-color: #333;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .input-group button:hover {
+        background-color: #555;
+      }
+
+      #messages {
+        list-style-type: none;
+        padding: 0;
+        margin-bottom: 20px;
+      }
+
+      #messages li {
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      #messages li:last-child {
+        margin-bottom: 0;
+      }
+    </style>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      socket.on('message', (message) => {
+        const messageElement = document.createElement('li');
+        messageElement.textContent = message;
+        document.getElementById('messages').appendChild(messageElement);
+      });
+
+      function sendMessage() {
+        const room = document.getElementById('room').value;
+        const text = document.getElementById('text').value;
+        const message = { room, text };
+        socket.emit('message', message);
+        document.getElementById('text').value = '';
+      }
+
+      function joinRoom() {
+        const room = document.getElementById('room').value;
+        socket.emit('join', room);
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Group Chat !!</h1>
+      <div class="input-group">
+        <input type="text" id="room" placeholder="Room name" />
+        <button onclick="joinRoom()">Join</button>
+      </div>
+      <ul id="messages"></ul>
+      <div class="input-group">
+        <input type="text" id="text" placeholder="Type a message" />
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+  </body>
+</html>
+
