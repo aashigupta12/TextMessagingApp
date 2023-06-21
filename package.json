@@ -1,13 +1,21 @@
 {
   "name": "messagingapp",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aashigupta12/TextMessagingApp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aashigupta12/TextMessagingApp/issues"
+  },
+  "homepage": "https://github.com/aashigupta12/TextMessagingApp#readme",
+  "description": ""
 }
